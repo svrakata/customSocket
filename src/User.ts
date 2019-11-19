@@ -1,25 +1,32 @@
 import axios from "axios"
+import MessageGenerator from "./messageGenerator"
 
-class Client {
+class User {
     public clearInt: NodeJS.Timeout
     public url = "http://localhost:3000/api/socket"
     public repeatTime = 5
-    public clientID = Math.floor(Math.random() * 100000)
+    public userID = Math.floor(Math.random() * 100000)
+    public messageGenerator = new MessageGenerator(this.userID)
 
     public request() {
         this.clearInt = setInterval(() => {
             const load = async () => {
                 try {
-                    const response = await axios.get(`${this.url}/?id=${this.clientID}`)
+                    const response = await axios.get(`${this.url}/?id=${this.userID}`)
                     // tslint:disable-next-line:no-console
                     console.log(response.data)
 
                 } catch (err) {
-                    console.log(err)
+                    // tslint:disable-next-line:no-console
+                    console.log(err.message)
                 }
             }
             load()
         }, this.repeatTime * 1000)
+    }
+
+    public generateMessagesAtRandomTimes(messageLimit: number = null) {
+        this.messageGenerator.generate(messageLimit)
     }
 
     public endRequest() {
@@ -27,4 +34,4 @@ class Client {
     }
 }
 
-export default Client
+export default User

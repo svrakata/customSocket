@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const messageGenerator_1 = __importDefault(require("./messageGenerator"));
-class Client {
+class User {
     constructor() {
         this.url = "http://localhost:3000/api/socket";
         this.repeatTime = 5;
@@ -31,7 +31,7 @@ class Client {
                 }
                 catch (err) {
                     // tslint:disable-next-line:no-console
-                    console.log(err);
+                    console.log(err.message);
                 }
             });
             load();
@@ -44,5 +44,5 @@ class Client {
         clearInterval(this.clearInt);
     }
 }
-exports.default = Client;
-//# sourceMappingURL=client.js.map
+exports.default = User;
+//# sourceMappingURL=User.js.map
