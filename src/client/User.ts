@@ -9,6 +9,7 @@ class User {
     public messageGenerator = new MessageGenerator(this.userID)
 
     public request() {
+        // this is polling
         this.clearInt = setInterval(() => {
             const load = async () => {
                 try {

@@ -12,30 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = __importDefault(require("./db"));
+const axios_1 = __importDefault(require("axios"));
 class MessageGenerator {
     constructor(userID) {
         this.userID = userID;
-        this.url = "http://localhost:4000/messages";
+        this.url = "http://localhost:3000/message";
         this.messageNumber = 1;
         this.timeoutID = null;
     }
     randomIntInRange(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
+        return Math.floor(Math.random() * (max - min) + min);
     }
     generate(messageLimit) {
         this.timeoutID = setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-            if (this.timeoutID) {
-                clearTimeout(this.timeoutID);
-            }
-            const db = db_1.default.getDB("socket");
-            const collection = db.collection("messages");
             const date = new Date();
             const ts = date.getTime();
-            yield collection.insert({ payload: `${this.messageNumber} Mississippi`, userID: this.userID, timestamp: ts });
+            const message = { payload: `${this.messageNumber} Mississippi`, userID: this.userID, timestamp: ts };
+            try {
+                yield axios_1.default.post(this.url, message);
+            }
+            catch (err) {
+                console.error(err.message);
+            }
             this.messageNumber++;
             this.generate(messageLimit);
-        }), this.randomIntInRange(1, 10) * 1000);
+        }), this.randomIntInRange(1, 20) * 1000);
         if (messageLimit && messageLimit <= this.messageNumber) {
             clearTimeout(this.timeoutID);
         }

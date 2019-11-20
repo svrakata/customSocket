@@ -6,6 +6,7 @@
   "scripts": {
     "startDB": "docker run --name mongoto -p 27017:27017 -d --rm mongo",
     "stopDB": "docker stop mongoto",
+    "attachDB": "docker exec -it mongoto /bin/bash",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",

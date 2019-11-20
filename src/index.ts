@@ -1,10 +1,9 @@
 // A socket is the combination of IP address plus port
 
 import axios from "axios"
-import DataBase from "./db"
-import setupApp from "./Server"
-import Server from "./Server"
-import User from "./User"
+import User from "./client/User"
+import DataBase from "./server/db"
+import Server from "./server/Server"
 
 const port = 3000
 const dbUrl = "mongodb://localhost:27017"
@@ -16,6 +15,7 @@ const load = async () => {
     const server = new Server(db)
     const { app } = server
 
+    server.configure()
     server.setRoutes()
 
     app.listen(port, () => {
@@ -27,7 +27,7 @@ const load = async () => {
         for (let i = 0; i <= numberOfUsers; i++) {
             const user = new User()
             user.request()
-            // client.generateMessagesAtRandomTimes(15)
+            user.generateMessagesAtRandomTimes()
         }
     })
 

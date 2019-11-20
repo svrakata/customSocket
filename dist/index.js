@@ -26,6 +26,7 @@ const load = () => __awaiter(void 0, void 0, void 0, function* () {
     const db = client.db(dbName);
     const server = new Server_1.default(db);
     const { app } = server;
+    server.configure();
     server.setRoutes();
     app.listen(port, () => {
         // tslint:disable-next-line:no-console
@@ -34,7 +35,7 @@ const load = () => __awaiter(void 0, void 0, void 0, function* () {
         for (let i = 0; i <= numberOfUsers; i++) {
             const user = new User_1.default();
             user.request();
-            // client.generateMessagesAtRandomTimes(15)
+            user.generateMessagesAtRandomTimes();
         }
     });
     process.on("SIGINT", () => __awaiter(void 0, void 0, void 0, function* () {
