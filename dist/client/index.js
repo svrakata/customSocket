@@ -12,26 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const db_1 = __importDefault(require("./db"));
-const app = express_1.default();
-app.get("/api/socket", (req, res) => {
-    const date = new Date();
-    const timestamp = date.getTime();
-    const id = req.query.id;
-    res.send(`Hello, user ${req.query.id}`);
+const Room_1 = __importDefault(require("./Room"));
+const load = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("are be");
+    const chatRoom = new Room_1.default();
+    chatRoom.poll();
 });
-app.get("/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const db = yield db_1.default.connect("mongodb://localhost:27017/socket");
-    console.log(db);
-    try {
-        console.log("\nThe DB is purged");
-        res.send("ready");
-    }
-    catch (err) {
-        console.error(err.message);
-        process.exit();
-    }
-}));
-exports.default = app;
-//# sourceMappingURL=server.js.map
+document.addEventListener("DOMContentLoaded", () => {
+    load();
+});

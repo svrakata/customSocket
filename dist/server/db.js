@@ -21,4 +21,3 @@ class DataBase {
     }
 }
 exports.default = DataBase;
-//# sourceMappingURL=db.js.map

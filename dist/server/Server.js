@@ -28,6 +28,11 @@ class Server {
             const date = new Date();
             const timestamp = date.getTime();
             const id = req.query.id;
+            // check for new content
+            // stall the request if no new content is available
+            // listen for event that triggers the response with the fresh payload
+            // else
+            // response
             res.send(`Request from user with id: ${id}.`);
         });
         this.app.post("/message", (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -50,4 +55,3 @@ class Server {
     }
 }
 exports.default = Server;
-//# sourceMappingURL=Server.js.map

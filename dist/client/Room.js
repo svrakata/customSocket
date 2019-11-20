@@ -14,35 +14,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const messageGenerator_1 = __importDefault(require("./messageGenerator"));
-class Client {
+class Room {
     constructor() {
         this.url = "http://localhost:3000/api/socket";
-        this.repeatTime = 5;
-        this.userID = Math.floor(Math.random() * 100000);
-        this.messageGenerator = new messageGenerator_1.default(this.userID);
+        this.roomID = Math.floor(Math.random() * 100000);
+        this.messageGenerator = new messageGenerator_1.default(this.roomID);
     }
-    request() {
-        this.clearInt = setInterval(() => {
-            const load = () => __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const response = yield axios_1.default.get(`${this.url}/?id=${this.userID}`);
-                    // tslint:disable-next-line:no-console
-                    console.log(response.data);
-                }
-                catch (err) {
-                    // tslint:disable-next-line:no-console
-                    console.log(err);
-                }
-            });
-            load();
-        }, this.repeatTime * 1000);
+    poll() {
+        const load = () => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield axios_1.default.get(`${this.url}/?id=${this.roomID}`);
+                // tslint:disable-next-line:no-console
+                console.log(response.data);
+                this.poll();
+            }
+            catch (err) {
+                // tslint:disable-next-line:no-console
+                console.log(err.message);
+            }
+        });
+        load();
     }
     generateMessagesAtRandomTimes(messageLimit = null) {
         this.messageGenerator.generate(messageLimit);
     }
-    endRequest() {
-        clearInterval(this.clearInt);
+    leaveRoom() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield axios_1.default.get(`${this.url}?leave=1`);
+            // close chat or whatever
+        });
     }
 }
-exports.default = Client;
-//# sourceMappingURL=client.js.map
+exports.default = Room;

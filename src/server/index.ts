@@ -1,9 +1,9 @@
 // A socket is the combination of IP address plus port
+// WS - web socket is a duplex connection protocol based on TCP/IP initiated by a http handshake
 
 import axios from "axios"
-import User from "./client/User"
-import DataBase from "./server/db"
-import Server from "./server/Server"
+import DataBase from "./db"
+import Server from "./Server"
 
 const port = 3000
 const dbUrl = "mongodb://localhost:27017"
@@ -21,14 +21,6 @@ const load = async () => {
     app.listen(port, () => {
         // tslint:disable-next-line:no-console
         console.log(`Server is listening on port - ${port}`)
-
-        const numberOfUsers = 6
-
-        for (let i = 0; i <= numberOfUsers; i++) {
-            const user = new User()
-            user.request()
-            user.generateMessagesAtRandomTimes()
-        }
     })
 
     process.on("SIGINT", async () => {

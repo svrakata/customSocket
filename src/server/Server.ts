@@ -17,6 +17,12 @@ class Server {
             const timestamp = date.getTime()
             const id = req.query.id
 
+            // check for new content
+            // stall the request if no new content is available
+            // listen for event that triggers the response with the fresh payload
+            // else
+            // response
+
             res.send(`Request from user with id: ${id}.`)
         })
 

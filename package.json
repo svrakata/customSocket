@@ -2,14 +2,15 @@
   "name": "customSocket",
   "version": "1.0.0",
   "description": "Socket like server",
-  "main": "dist/index.js",
   "scripts": {
     "startDB": "docker run --name mongoto -p 27017:27017 -d --rm mongo",
     "stopDB": "docker stop mongoto",
     "attachDB": "docker exec -it mongoto /bin/bash",
-    "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node .",
+    "buildClient": "tsc -p ./tsconfig_client.json",
+    "buildServer": "tsc -p ./tsconfig_server.json",
+    "startServer": "./node_modules/.bin/nodemon ./dist/server/index.js",
+    "startClient": "live-server --port=4000 --open=./src/",
+    "start": "npm run build & npm run startServer & npm run startClient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +31,7 @@
     "express": "^4.17.1",
     "json-server": "^0.15.1",
     "mongodb": "^3.3.4",
+    "nodemon": "^1.19.4",
     "ts-node": "^8.5.2",
     "tslint": "^5.20.1",
     "typescript": "^3.7.2"

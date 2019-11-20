@@ -46,4 +46,3 @@ class MessageGenerator {
     }
 }
 exports.default = MessageGenerator;
-//# sourceMappingURL=messageGenerator.js.map
